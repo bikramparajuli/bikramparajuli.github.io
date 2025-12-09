@@ -41,6 +41,10 @@
             background: #1f3b70;
             color: #fff;
         }
+        nav a.active {
+            background: #1f3b70;
+            color: #fff;
+        }
 
         main {
             max-width: 1000px;
@@ -48,19 +52,13 @@
             padding: 0 5%;
         }
 
-        section {
-            display: none;
+        /* Content container where each section file will be loaded */
+        #content {
             background: #fff;
             border-radius: 6px;
             padding: 24px 22px 30px;
             box-shadow: 0 0 8px rgba(0,0,0,0.06);
-        }
-        section:target {
-            display: block;
-        }
-
-        #profile {
-            display: block;
+            min-height: 200px;
         }
 
         h2 {
@@ -120,87 +118,83 @@
     </header>
 
     <nav>
-        <a href="#profile">Profile</a>
-        <a href="#publications">Publications</a>
-        <a href="#teaching">Teaching</a>
-        <a href="#awards">Awards</a>
-        <a href="#community">Community Service</a>
-        <a href="#contact">Contact</a>
+        <a href="#profile" id="link-profile">Profile</a>
+        <a href="#publications" id="link-publications">Publications</a>
+        <a href="#teaching" id="link-teaching">Teaching</a>
+        <a href="#awards" id="link-awards">Awards</a>
+        <a href="#community" id="link-community">Community Service</a>
+        <a href="#contact" id="link-contact">Contact</a>
     </nav>
 
     <main>
-
-        <section id="profile">
-            <h2>Profile</h2>
-            <div class="profile-wrapper">
-                <div class="profile-photo">
-                    <img src="bikram.jpg" alt="Photo of Bikram Parajuli" />
-                </div>
-                <div class="profile-text">
-                    <p>
-                        I am a geospatial engineer and PhD candidate specializing in spatial optimization, 
-                        location analysis, climatology, and remote sensing. My research integrates GIScience, 
-                        GeoAI, environmental modelling, and atmospheric sciences, with a focus on developing 
-                        coverage-based facility location models for mobile radar deployment.
-                    </p>
-        
-                    <p>
-                        I hold an M.Eng. in Cartography and Geographical Information Engineering from 
-                        Wuhan University, China, and a B.E. in Geomatics Engineering from Tribhuvan University, Nepal. 
-                        My expertise spans GIS, machine learning, spatial statistics, radar observation, photogrammetry, 
-                        and environmental modelling.
-                    </p>
-        
-                    <div class="contact-line">
-                        Email: <a href="mailto:bikramparajuli8@ou.edu">bikramparajuli8@ou.edu</a> · 
-                        Phone: 405-314-8055 · 
-                        <a href="https://scholar.google.com/citations?user=TtwH4TYAAAAJ&hl=en" target="_blank">
-                            Google Scholar Profile
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <section id="publications">
-            <h2>Publications</h2>
-            <p>Content will be added here.</p>
-        </section>
-
-        <section id="teaching">
-            <h2>Teaching</h2>
-            <p>Content will be added here.</p>
-        </section>
-
-        <section id="awards">
-            <h2>Awards & Honors</h2>
-            <p>Content will be added here.</p>
-        </section>
-
-        <section id="community">
-            <h2>Community Service & Volunteering</h2>
-            <p>Content will be added here.</p>
-        </section>
-
-        <section id="contact">
-            <h2>Contact Information</h2>
-        
-            <p>Email: 
-                <a href="mailto:bikramparajuli8@ou.edu">bikramparajuli8@ou.edu</a>
-            </p>
-        
-            <p>Phone: 405-314-8055</p>
-        
-            <p>
-                <a href="https://scholar.google.com/citations?user=TtwH4TYAAAAJ&hl=en" target="_blank">
-                    Google Scholar Profile
-                </a>
-            </p>
-        </section>
-
-
+        <div id="content">
+            <!-- Section content will be loaded here -->
+            Loading...
+        </div>
     </main>
+
+    <script>
+        // Map section name -> HTML file
+        const sectionFiles = {
+            profile: 'profile.html',
+            publications: 'publications.html',
+            teaching: 'teaching.html',
+            awards: 'awards.html',
+            community: 'community.html',
+            contact: 'contact.html'
+        };
+
+        function getSectionFromHash() {
+            if (location.hash) {
+                return location.hash.substring(1); // remove '#'
+            }
+            return 'profile'; // default section
+        }
+
+        function setActiveLink(section) {
+            // Remove active class from all nav links
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            // Add active to current
+            const link = document.getElementById('link-' + section);
+            if (link) {
+                link.classList.add('active');
+            }
+        }
+
+        function loadSection(section) {
+            const file = sectionFiles[section] || sectionFiles['profile'];
+            const contentDiv = document.getElementById('content');
+
+            // Optional: small loading message
+            contentDiv.innerHTML = 'Loading...';
+
+            fetch(file)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    contentDiv.innerHTML = html;
+                    setActiveLink(section);
+                })
+                .catch(error => {
+                    contentDiv.innerHTML = '<p>Sorry, something went wrong loading this section.</p>';
+                    console.error(error);
+                });
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const section = getSectionFromHash();
+            loadSection(section);
+        });
+
+        window.addEventListener('hashchange', () => {
+            const section = getSectionFromHash();
+            loadSection(section);
+        });
+    </script>
 
 </body>
 </html>
