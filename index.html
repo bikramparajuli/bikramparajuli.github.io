@@ -19,7 +19,7 @@
         }
         header h1 {
             margin: 0;
-            font-size: 1.8rem;
+            font-size: 2.8rem;
         }
         .teaching-item {
             margin-bottom: 14px;
@@ -51,8 +51,8 @@
 
 
         header p {
-            margin: 4px 0 0;
-            font-size: 0.95rem;
+            margin: 8px 0 0;
+            font-size: 1.3rem;
             opacity: 0.9;
         }
         .profile-intro {
@@ -115,8 +115,8 @@
         nav a {
             color: #ddd;
             text-decoration: none;
-            padding: 10px 14px;
-            font-size: 0.95rem;
+            padding: 20px 28px;
+            font-size: 1.9rem;
         }
         nav a:hover {
             background: #1f3b70;
@@ -142,7 +142,7 @@
         }
 
         .page-section {
-            scroll-margin-top: 56px;
+            scroll-margin-top: 100px;
         }
 
         .page-section + .page-section {
@@ -243,6 +243,7 @@
 
     <nav>
         <a href="#profile" id="link-profile">Profile</a>
+        <a href="#education" id="link-education">Education</a>
         <a href="#publications" id="link-publications">Publications</a>
         <a href="#teaching" id="link-teaching">Teaching</a>
         <a href="#awards" id="link-awards">Awards</a>
@@ -259,6 +260,7 @@
     <script>
         const sectionFiles = {
             profile: 'profile.html',
+            education: 'education.html',
             publications: 'publications.html',
             teaching: 'teaching.html',
             awards: 'awards.html',
@@ -266,7 +268,7 @@
             contact: 'contact.html'
         };
 
-        var sectionOrder = ['profile', 'publications', 'teaching', 'awards', 'community', 'contact'];
+        var sectionOrder = ['profile', 'education', 'publications', 'teaching', 'awards', 'community', 'contact'];
 
         function setActiveLink(section) {
             document.querySelectorAll('nav a').forEach(function (a) {
