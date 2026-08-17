@@ -108,6 +108,7 @@
             padding: 0 4%;
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -408,7 +409,7 @@
             var contentDiv = document.getElementById('content');
 
             Promise.all(sectionOrder.map(function (key) {
-                return fetch(sectionFiles[key])
+                return fetch(sectionFiles[key], { cache: 'no-store' })
                     .then(function (response) {
                         if (!response.ok) {
                             throw new Error('Failed to load');
