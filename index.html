@@ -70,33 +70,63 @@
             color: #444;
             font-size: 1.1rem;
         }
-        .award-item {
-            margin-bottom: 26px;
-            line-height: 1.5;
-            font-size: 0.97rem;
-            position: relative;
-            min-height: 90px;
+        .award-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
         }
-                
-        .award-image img {
-            width: 140px;       /* Adjust image size here */
-            border-radius: 6px;
-            box-shadow: 0 0 6px rgba(0,0,0,0.15);
-            object-fit: cover;
+
+        .award-list-item {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 18px;
+            line-height: 1.55;
+        }
+
+        .award-list-item::before {
+            content: '';
+            position: absolute;
+            left: 2px;
+            top: 9px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #0c2340;
+            opacity: 0.55;
+        }
+
+        .award-title {
+            font-weight: 700;
+            color: #222;
+            font-size: 0.98rem;
+        }
+
+        .award-year {
+            color: #888;
+            font-size: 0.87rem;
+            margin-left: 6px;
+        }
+
+        .award-desc {
+            color: #666;
+            font-size: 0.89rem;
+            font-style: italic;
+            margin-top: 3px;
         }
 
         .vol-item {
-            margin-bottom: 22px;
+            margin-bottom: 30px;
             line-height: 1.5;
             font-size: 0.97rem;
-            position: relative;
-            min-height: 90px;
         }
         .vol-image img {
-            width: 140px;
-            border-radius: 6px;
-            box-shadow: 0 0 6px rgba(0,0,0,0.15);
+            width: 100%;
+            max-height: 420px;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.12);
             object-fit: cover;
+            margin-bottom: 12px;
+            display: block;
         }
 
         html {
@@ -309,7 +339,7 @@
         }
 
         .type-badge.ta {
-            background: #a9720f;
+            background: #0c2340;
         }
 
         .teaching-card {
@@ -359,16 +389,28 @@
         }
 
         .contact-item {
-    margin-bottom: 16px;
-    line-height: 1.5;
-    font-size: 0.97rem;
+            background: #fafafa;
+            border: 1px solid #eaeaea;
+            border-left: 4px solid #0c2340;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            line-height: 1.5;
+            font-size: 0.97rem;
         }
-        
+
+        .contact-item strong {
+            display: block;
+            color: #0c2340;
+            margin-bottom: 4px;
+            font-size: 1rem;
+        }
+
         .contact-item a {
             color: #0066cc;
             text-decoration: none;
         }
-        
+
         .contact-item a:hover {
             text-decoration: underline;
         }
