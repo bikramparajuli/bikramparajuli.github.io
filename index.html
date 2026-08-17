@@ -27,11 +27,11 @@
             font-size: 0.97rem;
         }
         .profile-contact-mini {
-            margin-top: 10px;
-            font-size: 0.90rem;
+            margin-top: 16px;
+            font-size: 0.95rem;
             color: #444;
-            line-height: 1.4;
-            text-align: left;
+            line-height: 1.6;
+            text-align: center;
         }
         
         .profile-contact-mini a {
@@ -147,8 +147,8 @@
         }
 
         .page-section + .page-section {
-            margin-top: 40px;
-            padding-top: 32px;
+            margin-top: 24px;
+            padding-top: 20px;
             border-top: 1px solid #eee;
         }
 
@@ -160,21 +160,21 @@
 
         .profile-wrapper {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
-        }
-        .profile-photo {
-            flex: 0 0 180px;
+            text-align: center;
         }
         .profile-photo img {
-            width: 180px;
-            height: 220px;
+            width: 230px;
+            height: 280px;
             border-radius: 8px;
             object-fit: cover;
             box-shadow: 0 0 6px rgba(0,0,0,0.15);
         }
         .profile-text {
-            flex: 1 1 250px;
+            max-width: 680px;
+            margin: 0 auto;
         }
         .contact-line {
             margin-top: 10px;
@@ -189,16 +189,16 @@
             text-decoration: underline;
         }
         .cv-button {
-            display: block;
-            margin-top: 12px;
-            padding: 8px 14px;
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 24px;
             background: #0c2340;
             color: #fff;
             text-align: center;
             border-radius: 6px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 600;
             text-decoration: none;
-            width: 130px;
             box-shadow: 0 0 5px rgba(0,0,0,0.15);
         }
 
@@ -304,6 +304,60 @@
             background: #0e7c86;
         }
 
+        .type-badge.instructor {
+            background: #0c2340;
+        }
+
+        .type-badge.ta {
+            background: #a9720f;
+        }
+
+        .teaching-card {
+            background: #fafafa;
+            border: 1px solid #eaeaea;
+            border-left: 4px solid #0c2340;
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 0 6px rgba(0,0,0,0.05);
+        }
+
+        .teaching-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+        }
+
+        .teaching-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #0c2340;
+            line-height: 1.4;
+        }
+
+        .teaching-meta {
+            font-size: 0.92rem;
+            color: #444;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .teaching-desc {
+            font-size: 0.93rem;
+            color: #333;
+            line-height: 1.6;
+            margin: 0 0 10px;
+        }
+
+        .teaching-term {
+            font-size: 0.88rem;
+            color: #0e7c86;
+            font-weight: 700;
+        }
+
         .contact-item {
     margin-bottom: 16px;
     line-height: 1.5;
@@ -322,13 +376,6 @@
         @media (max-width: 700px) {
             header, nav {
                 padding: 12px 5%;
-            }
-            .profile-wrapper {
-                flex-direction: column;
-                align-items: center;
-            }
-            .profile-text {
-                text-align: left;
             }
         }
     </style>
