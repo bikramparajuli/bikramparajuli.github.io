@@ -84,12 +84,32 @@
             object-fit: cover;
         }
 
+        .vol-item {
+            margin-bottom: 22px;
+            line-height: 1.5;
+            font-size: 0.97rem;
+            position: relative;
+            min-height: 90px;
+        }
+        .vol-image img {
+            width: 140px;
+            border-radius: 6px;
+            box-shadow: 0 0 6px rgba(0,0,0,0.15);
+            object-fit: cover;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
 
         nav {
             background: #12284a;
             padding: 0 10%;
             display: flex;
             flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         nav a {
             color: #ddd;
@@ -118,6 +138,16 @@
             padding: 24px 22px 30px;
             box-shadow: 0 0 8px rgba(0,0,0,0.06);
             min-height: 200px;
+        }
+
+        .page-section {
+            scroll-margin-top: 56px;
+        }
+
+        .page-section + .page-section {
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid #eee;
         }
 
         h2 {
@@ -233,12 +263,7 @@
             contact: 'contact.html'
         };
 
-        function getSectionFromHash() {
-            if (location.hash) {
-                return location.hash.substring(1);
-            }
-            return 'profile';
-        }
+        var sectionOrder = ['profile', 'publications', 'teaching', 'awards', 'community', 'contact'];
 
         function setActiveLink(section) {
             document.querySelectorAll('nav a').forEach(function (a) {
@@ -250,37 +275,61 @@
             }
         }
 
-        function loadSection(section) {
-            var file = sectionFiles[section] || sectionFiles.profile;
-            var contentDiv = document.getElementById('content');
-
-            contentDiv.textContent = 'Loading...';
-
-            fetch(file)
-                .then(function (response) {
-                    if (!response.ok) {
-                        throw new Error('Failed to load');
+        function setupScrollSpy() {
+            var sections = document.querySelectorAll('.page-section');
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        setActiveLink(entry.target.id);
                     }
-                    return response.text();
-                })
-                .then(function (html) {
-                    contentDiv.innerHTML = html;
-                    setActiveLink(section);
-                })
-                .catch(function () {
-                    contentDiv.innerHTML = '<p>Could not load this section.</p>';
                 });
+            }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+            sections.forEach(function (s) {
+                observer.observe(s);
+            });
         }
 
-        window.addEventListener('DOMContentLoaded', function () {
-            var section = getSectionFromHash();
-            loadSection(section);
-        });
+        function scrollToInitialHash() {
+            if (location.hash) {
+                var el = document.getElementById(location.hash.substring(1));
+                if (el) {
+                    setTimeout(function () {
+                        el.scrollIntoView();
+                    }, 50);
+                }
+            }
+        }
 
-        window.addEventListener('hashchange', function () {
-            var section = getSectionFromHash();
-            loadSection(section);
-        });
+        function loadAllSections() {
+            var contentDiv = document.getElementById('content');
+
+            Promise.all(sectionOrder.map(function (key) {
+                return fetch(sectionFiles[key])
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Failed to load');
+                        }
+                        return response.text();
+                    })
+                    .catch(function () {
+                        return '<p>Could not load this section.</p>';
+                    });
+            })).then(function (htmlPieces) {
+                contentDiv.innerHTML = '';
+                sectionOrder.forEach(function (key, i) {
+                    var section = document.createElement('section');
+                    section.id = key;
+                    section.className = 'page-section';
+                    section.innerHTML = htmlPieces[i];
+                    contentDiv.appendChild(section);
+                });
+                setupScrollSpy();
+                scrollToInitialHash();
+            });
+        }
+
+        window.addEventListener('DOMContentLoaded', loadAllSections);
     </script>
 
 </body>
